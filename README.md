@@ -139,8 +139,8 @@ http://127.0.0.1:8000/docs
 - [x] Git/GitHub version control
 - [x] Dockerize the application
 - [x] Deploy the application
-- [x] Improve retention recommendations
-- [x] Add model explainability
+- [ ] Improve retention recommendations
+- [ ] Add model explainability
 
 ## Author
 
