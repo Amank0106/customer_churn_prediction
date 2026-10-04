@@ -137,10 +137,10 @@ http://127.0.0.1:8000/docs
 - [x] FastAPI backend
 - [x] Web frontend
 - [x] Git/GitHub version control
-- [ ] Dockerize the application
-- [ ] Deploy the application
-- [ ] Improve retention recommendations
-- [ ] Add model explainability
+- [x] Dockerize the application
+- [x] Deploy the application
+- [x] Improve retention recommendations
+- [x] Add model explainability
 
 ## Author
 
