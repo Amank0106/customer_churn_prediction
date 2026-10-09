@@ -1,39 +1,46 @@
 # Customer Churn Prediction
 
-An end-to-end **customer churn prediction product** for telecom businesses. The application takes customer and service information, predicts the likelihood of churn using a trained machine-learning pipeline, and presents the result through a simple web interface.
+An end-to-end **customer churn prediction application** built using machine learning and deployed as a web application. It helps identify customers who may be likely to leave a telecom service by analyzing their service, contract, and billing information.
 
-The goal is to turn a churn model into something a **retail/telecom employee could actually use** when assessing a customer.
+**Live Demo:** [Try the application](https://customer-churn-prediction-ozjk.onrender.com/frontend/)
 
-## What it does
+**API Documentation:** [Explore the FastAPI docs](https://customer-churn-prediction-ozjk.onrender.com/docs)
+
+## Overview
+
+The project takes a machine-learning model beyond a notebook and turns it into an interactive application that accepts customer information and returns a churn prediction with an estimated probability.
+
+### Features
 
 - Collects customer, service, contract, and billing information through a web form.
-- Uses a trained **Logistic Regression** pipeline for churn prediction.
-- Returns both the predicted class and **churn probability**.
-- Converts probability into a simple **Low / Medium / High risk** view.
-- Provides a basic retention-oriented recommendation for higher-risk customers.
-- Exposes the model through a **FastAPI REST API**.
-- Provides interactive API testing through FastAPI Swagger docs.
-- Keeps the complete ML workflow in a notebook, from EDA to model selection and tuning.
+- Uses a trained **Logistic Regression pipeline** for churn prediction.
+- Returns the predicted class and estimated churn probability.
+- Displays a **Low / Medium / High risk** interpretation.
+- Provides basic retention-oriented guidance for higher-risk customers.
+- Exposes predictions through a **FastAPI REST API**.
+- Supports interactive API testing through Swagger UI.
+- Includes a notebook covering exploratory data analysis, model comparison, and hyperparameter tuning.
+- Deployed on Render.
 
-## Product Flow
+## Application Workflow
 
 ```text
-Customer details
-      ↓
+Customer Information
+        ↓
 Web Frontend
-      ↓
-FastAPI /predict
-      ↓
-Saved ML Pipeline
-      ↓
-Churn prediction + probability
-      ↓
-Risk level + retention guidance
+        ↓
+FastAPI Prediction Endpoint
+        ↓
+Preprocessing + Trained ML Pipeline
+        ↓
+Prediction + Churn Probability
+        ↓
+Risk Interpretation + Retention Guidance
 ```
 
-## Model
+## Model Development
 
-Multiple classification models were evaluated, including:
+Multiple classification algorithms were evaluated:
 
 - Logistic Regression
 - K-Nearest Neighbors
@@ -41,18 +48,51 @@ Multiple classification models were evaluated, including:
 - Random Forest
 - XGBoost
 
-Logistic Regression gave the strongest initial F1 score and was subsequently tuned with `GridSearchCV`. Because missing a potential churner can be costly in a retention setting, **recall** was given particular importance during tuning.
+Logistic Regression achieved the strongest initial F1 score among the evaluated models. Hyperparameter tuning was then performed using `GridSearchCV`, with particular emphasis on **recall** to identify as many potential churners as possible.
 
-The final fitted preprocessing + model pipeline is saved in:
+The final preprocessing and classification pipeline is saved as:
 
 ```text
 pipeline/pipeline_churn.pkl
 ```
 
-## Application
+The API loads this fitted pipeline to generate predictions for new customer inputs.
+
+## Exploratory Data Analysis
+
+The project includes visual analysis of customer churn patterns.
+
+### Overall Churn
+
+![Overall Churn](images/churn_count.png)
+
+### Churn by Customer Tenure
+
+![Churn by Tenure](images/churn_count_wrt_duration.png)
+
+### Churn by Gender
+
+![Churn by Gender](images/churn_count_wrt_gender.png)
+
+### Churn by Monthly Charges
+
+![Churn by Monthly Charges](images/churn_count_wrt_monthly_charges.png)
+
+## Tech Stack
+
+- **Programming:** Python
+- **Data Analysis:** Pandas, NumPy, Matplotlib, Seaborn
+- **Machine Learning:** Scikit-learn, XGBoost
+- **Model Persistence:** Joblib
+- **Backend:** FastAPI, Pydantic, Uvicorn
+- **Frontend:** HTML, CSS, JavaScript
+- **Version Control:** Git, GitHub
+- **Deployment:** Render
+
+## Project Structure
 
 ```text
-churn/
+customer_churn_prediction/
 ├── app/
 │   └── main.py
 ├── dataset/
@@ -67,84 +107,67 @@ churn/
 │   ├── churn_count_wrt_gender.png
 │   └── churn_count_wrt_monthly_charges.png
 ├── notebook/
+│   └── customer churn.ipynb
 ├── pipeline/
 │   └── pipeline_churn.pkl
 ├── .gitignore
+├── .python-version
 ├── README.md
 └── requirements.txt
 ```
 
-## Insights
-
-### Overall Churn
-
-![Overall Churn](images/churn_count.png)
-
-### Churn by Tenure
-
-![Churn by Tenure](images/churn_count_wrt_duration.png)
-
-### Churn by Gender
-
-![Churn by Gender](images/churn_count_wrt_gender.png)
-
-### Churn by Monthly Charges
-
-![Churn by Monthly Charges](images/churn_count_wrt_monthly_charges.png)
-
-## Tech Stack
-
-**Machine Learning:** Python, Pandas, NumPy, Scikit-learn, XGBoost, Joblib
-
-**Backend:** FastAPI, Pydantic, Uvicorn
-
-**Frontend:** HTML, CSS, JavaScript
-
-**Development:** Git, GitHub, VS Code
-
 ## Run Locally
 
-Install dependencies:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Amank0106/customer_churn_prediction.git
+cd customer_churn_prediction
+```
+
+### 2. Install dependencies
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-Start the API:
+### 3. Start the application
 
 ```bash
 python -m uvicorn app.main:app --reload
 ```
 
-Open the application:
+### 4. Open the application
 
-```text
-http://127.0.0.1:8000/frontend/
-```
-
-API documentation:
-
-```text
-http://127.0.0.1:8000/docs
-```
+- **Web interface:** http://127.0.0.1:8000/frontend/
+- **API documentation:** http://127.0.0.1:8000/docs
 
 ## Roadmap
 
-- [x] EDA and feature analysis
-- [x] Model comparison
-- [x] Model tuning
-- [x] Saved ML pipeline
-- [x] FastAPI backend
-- [x] Web frontend
+- [x] Exploratory data analysis and feature analysis
+- [x] Model comparison and selection
+- [x] Hyperparameter tuning
+- [x] Saved preprocessing and model pipeline
+- [x] FastAPI prediction endpoint
+- [x] Interactive web frontend
 - [x] Git/GitHub version control
-- [x] Dockerize the application
-- [x] Deploy the application
+- [x] Cloud deployment on Render
+- [ ] Dockerize the application
 - [ ] Improve retention recommendations
 - [ ] Add model explainability
+- [ ] Add automated model evaluation and monitoring
+
+## Key Learnings
+
+- Building and evaluating classification models
+- Handling preprocessing within a Scikit-learn pipeline
+- Using recall and F1 score to evaluate model performance
+- Serving ML predictions through a REST API
+- Connecting a frontend to a backend
+- Version-controlling and deploying an end-to-end ML application
 
 ## Author
 
-**Aman Kumar**
-
+**Aman Kumar**  
 Electronics & Communication Engineering  
-Machine Learning • Data Science • Backend
+Interests: Machine Learning, Deep Learning, Data Science, and AI Engineering
